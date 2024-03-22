@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    container_name: ms-admin
+    volumes:
+      - .:/home/node/app
+    ports:
+      - 8080:8080
