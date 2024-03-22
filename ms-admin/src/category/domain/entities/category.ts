@@ -16,4 +16,23 @@ export class Category extends Entity<Props> {
     this.props.is_active = props.is_active ?? true;
     this.props.created_at = props.created_at ?? new Date();
   }
+
+  update(props: Partial<Props>) {
+    this.props.name = props.name ?? this.props.name;
+    this.props.description = props.description ?? this.props.description;
+
+    if (props.is_active === true) {
+      this.activate();
+    } else if (props.is_active === false) {
+      this.deactivate();
+    }
+  }
+
+  activate(): void {
+    this.props.is_active = true;
+  }
+
+  deactivate(): void {
+    this.props.is_active = false;
+  }
 }
