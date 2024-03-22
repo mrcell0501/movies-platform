@@ -1,11 +1,10 @@
 import { InvalidUuidError } from "../../errors/invalid-uuid.error";
 import * as uuid from "uuid";
+import { ValueObject } from "./value-object";
 
-export class UniqueEntityId {
-  public readonly value: string;
-
+export class UniqueEntityId extends ValueObject<string> {
   constructor(id?: string) {
-    this.value = id ?? uuid.v4();
+    super(id ?? uuid.v4());
     this.validate();
   }
 
