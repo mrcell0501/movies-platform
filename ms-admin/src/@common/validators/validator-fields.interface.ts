@@ -1,5 +1,9 @@
+export type FieldsErrors = {
+  [field: string]: string[];
+};
+
 export interface ValidatorFields<ValidatedProps> {
   validate(data: ValidatedProps): boolean;
-  errors?: Partial<{ [key: string]: string[] }>;
+  errors?: FieldsErrors;
   data: ValidatedProps;
 }
