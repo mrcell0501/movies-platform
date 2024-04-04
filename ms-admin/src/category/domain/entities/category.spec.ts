@@ -2,10 +2,16 @@ import { UniqueEntityId } from "../../../@common/domain/value-objects/unique-ent
 import { InvalidUuidError } from "../../../@common/errors/invalid-uuid.error";
 import { Category } from "./category";
 
-describe("Category constructor", () => {
+describe("Category Unit Tests", () => {
+  beforeEach(() => {
+    Category.validateCreate = jest.fn();
+    Category.validateUpdate = jest.fn();
+  });
+
   it("should be able to create a category passing only name", () => {
     const category = new Category({ name: "Movie" });
 
+    expect(Category.validateCreate).toHaveBeenCalledTimes(1);
     expect(category.props).toStrictEqual({
       name: "Movie",
       description: null,
@@ -21,8 +27,10 @@ describe("Category constructor", () => {
       is_active: false,
       created_at: new Date(),
     };
+
     const category = new Category(props);
 
+    expect(Category.validateCreate).toHaveBeenCalledTimes(1);
     expect(category.props).toStrictEqual(props);
   });
 
@@ -47,9 +55,7 @@ describe("Category constructor", () => {
   it("should update a category", () => {
     const activateSpy = jest.spyOn(Category.prototype as any, "activate");
     const deactivateSpy = jest.spyOn(Category.prototype as any, "deactivate");
-
     const category = new Category({ name: "Movie" });
-
     let updateProps = {
       name: "Movie 2",
       description: "some description",
@@ -57,11 +63,13 @@ describe("Category constructor", () => {
     };
 
     category.update(updateProps);
+    expect(Category.validateUpdate).toHaveBeenCalledTimes(1);
     expect(category.props).toMatchObject(updateProps);
     expect(deactivateSpy).toHaveBeenCalledTimes(1);
 
     updateProps = { ...updateProps, is_active: true };
     category.update(updateProps);
+    expect(Category.validateUpdate).toHaveBeenCalledTimes(2);
     expect(category.props).toMatchObject(updateProps);
     expect(activateSpy).toHaveBeenCalledTimes(1);
   });

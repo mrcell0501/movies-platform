@@ -22,6 +22,8 @@
     "typescript": "^5.4.3"
   },
   "dependencies": {
+    "@nestjs/swagger": "^7.3.0",
+    "class-validator": "^0.14.1",
     "uuid": "^9.0.1"
   }
 }
